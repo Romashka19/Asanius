@@ -1,0 +1,14 @@
+form.tasks{
+    margin-top: 5px;
+    border-top: 1px solid #273240;
+}
+div.row{
+    margin: 0;
+}
+div.sideBar{
+    border-bottom: 1px solid #273240;
+    margin: 20px;
+}
+div{
+    padding: 0;
+}
