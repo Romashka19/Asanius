@@ -12,6 +12,7 @@ div.sideBar{
 div{
     padding: 0;
 }
-a.projectHref{
-
+a:link {
+    color: #0000d0;
+    padding: 2px;
 }
