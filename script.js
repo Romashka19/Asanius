@@ -1,58 +1,70 @@
-let key;
+let prTask = [];
 let projects = [];
-let task = [];
+let tasks = [];
+let project_id;
 buildProject();
-check();
-function check() {
-    for(let i=0; i<localStorage.length; i++) {
-        key = localStorage.key(i);
-    }
-}
+buildTasks();
 
 function buildProject(){
-    for(let i=0; i<localStorage.length;i++){
-        let prName = localStorage.getItem(key);
+    projects = JSON.parse(localStorage.getItem('project'));
+    for(let i=0;i<projects.length;i++){
         let projectContainer = document.getElementById('projectContainer');
         let projectLink = document.createElement('button');
-        projectLink.className = 'btn btn-primary';
-        projectLink.id = prName;
-        projectLink.innerHTML = prName;
+        projectLink.className = 'btn btn-primary btn-project';
+        projectLink.id = projects[i].prName;
+        projectLink.innerHTML = projects[i].prName;
         let br = document.createElement('br');
 
         projectContainer.appendChild(projectLink);
         projectContainer.appendChild(br);
+
+        //console.log(projects[i].prName);
     }
+    createEvent();
 }
 
 function createProject() {
     let projectName = $('#projectName').val();
-    projects = [{name:projectName}];
-    localStorage.setItem(key,projects);
-    location.reload(true);
+    projects.push({prName:projectName,task:tasks});
+    localStorage.setItem('project',JSON.stringify(projects));
 }
 
 function buildTasks(){
+    prTask = JSON.parse(localStorage.getItem('project'));
+    for (let i = 0; i < prTask.length; i++) {
+        let taskName = prTask[i].task;
+        if(project_id == prTask[i].name) {
+            for (let j = 0; j < taskName.length; j++) {
+                let taskContainer = document.getElementById('taskContainer');
+                let taskBlock = document.createElement('div');
+                taskBlock.className = 'tasks';
+                taskBlock.id = taskName[j].name;
+                let br = document.createElement('br');
+                let h3 = document.createElement('h3');
+                h3.innerHTML = taskName[j].name;
 
-    for (let i = 0; i < localStorage.length; i++) {
-            let taskName = JSON.parse(localStorage.value(i));
-            let taskContainer = document.getElementById('taskContainer');
-            let taskBlock = document.createElement('div');
-            taskBlock.className = 'tasks';
-            //taskBlock.id =tryrt ;
-            let br = document.createElement('br');
-            let h3 = document.createElement('h3');
-            h3.innerHTML = taskName;
-
-            taskContainer.appendChild(taskBlock);
-            taskContainer.appendChild(h3);
-            taskContainer.appendChild(br);
+                taskContainer.appendChild(taskBlock);
+                taskContainer.appendChild(h3);
+                taskContainer.appendChild(br);
+            }
+        }
     }
 }
 
 function createTask() {
-
     let taskName = $('#taskName').val();
-    task = [{name:taskName}];
+    tasks.push({name:taskName});
+    projects.push({prName:project_id,task:tasks});
+    //localStorage.setItem('project',JSON.stringify(projects));
     buildTasks();
+    // location.reload(true);
 }
 
+function createEvent(event){
+    let btn = document.getElementsByClassName("btn-project");
+    for(let i = 0;i<btn.length;i++){
+        project_id = btn[i].id;
+        project_id.onclick = buildTasks;
+        console.log(project_id);
+    }
+}
