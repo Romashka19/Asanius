@@ -16,20 +16,23 @@ const Project = function(project_id,projects,task_id,tasks){
     this.addProject = function (projects,tasks) {
         projects = JSON.parse(localStorage.getItem('project'));
         let projectName = $('#projectName').val();
-        projects.push({name: projectName, task: tasks});
-        projects = JSON.stringify(projects);
-        localStorage.setItem('project', projects);
-        project.buildProject();
+        if(projectName){
+            projects.push({name: projectName, task: tasks});
+            projects = JSON.stringify(projects);
+            localStorage.setItem('project', projects);
+            project.buildProject();
+        }
+
     };
 
     this.buildProject = function () {
         projects = JSON.parse(localStorage.getItem('project'));
-        let projectContainer = document.getElementById('projectContainer');
+        let building = document.getElementById('building');
         let content = '';
         for (let i = 0; i < projects.length; i++) {
-            content += '<p><button class="btn btn-dark btn-project" id="' + projects[i].name + '">' + projects[i].name + '</button></p>';
+            content += '<button class="btn-project" id="' + projects[i].name + '">' + projects[i].name + '</button>';
         }
-        projectContainer.innerHTML = content;
+        building.innerHTML = content;
         project.createEvent();
     };
 
@@ -45,14 +48,17 @@ const Project = function(project_id,projects,task_id,tasks){
 
     this.addTask = function () {
         let taskName = $('#taskName').val();
-        projects.filter(function (e) {
-            return e.name == project_id;
-        }).map(function (e) {
-            e.task.push({name:taskName})
-        });
-        projects = JSON.stringify(projects);
-        localStorage.setItem('project',projects);
-        project.buildTask(project_id);
+        if(taskName){
+            projects.filter(function (e) {
+                return e.name == project_id;
+            }).map(function (e) {
+                e.task.push({name:taskName})
+            });
+            projects = JSON.stringify(projects);
+            localStorage.setItem('project',projects);
+            project.buildTask(project_id);
+        }
+
     };
 
     this.buildTask = function (project_id) {
@@ -69,8 +75,8 @@ const Project = function(project_id,projects,task_id,tasks){
         for (let j = 0; j < getTasks.length; j++) {
             content +=  '<div class="tasks" id="'+ getTasks[j].name +'">\n' +
                 '                <h3>'+ getTasks[j].name +'</h3>\n' +
-                '                <button class="btn-task" data-toggle="modal" data-target="#editTask" id="'+ getTasks[j].name +'">edit</button>\n' +
-                '                <button class="btn-task" data-toggle="modal" data-target="#deleteTask" id="'+ getTasks[j].name +'">delete</button>\n' +
+                '                <button class="btn btn-dark btn-task" data-toggle="modal" data-target="#editTask" id="'+ getTasks[j].name +'">edit</button>\n' +
+                '                <button class="btn btn-dark btn-task" data-toggle="modal" data-target="#deleteTask" id="'+ getTasks[j].name +'">delete</button>\n' +
                 '        </div>';
 
         }

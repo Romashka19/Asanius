@@ -7,23 +7,22 @@
     <title>Document</title>
 </head>
 <body>
-<div>
-    <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand mb-0 h1">Asana</span>
-    </nav>
-</div>
 <div class="row">
-    <div class="col-2 bg-light">
+    <div class="col-2">
         <div class="sideBar">
-            <p><input type="button" class="btn btn-dark btn-lg btn-block" value="+ NEW" data-toggle="modal" data-target="#createProj"></p>
+            <h2 class="">Projects</h2>
         </div>
         <div class="sideBar" id="projectContainer">
+            <button class="btn-project" data-toggle="modal" data-target="#createProj"><h2>+NEW</h2></button>
             <div id="building">
-
+            <!-- building projects-->
             </div>
         </div>
     </div>
-    <div class="col-10">
+    <div class="col-8">
+        <div>
+                <h2 >Asana</h2>
+        </div>
             <div class="input-group mb-3 container">
                 <input type="text" class="form-control" placeholder="Input your task" id="taskName" name="taskName">
                 <div class="input-group-append">
@@ -32,7 +31,7 @@
             </div>
         <div id="taskContainer">
             <div >
-
+                <!-- building tasks-->
             </div>
         </div>
     </div>
